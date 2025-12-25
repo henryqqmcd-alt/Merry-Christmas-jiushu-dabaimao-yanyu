@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>圣诞祝福红包雨</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0a0a2a, #1a1a4d);
+    height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+  }
+
+  #messageBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.95);
+    color: #000;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 22px;
+    max-width: 300px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+    z-index: 1000;
+  }
+
+  .element {
+    position: absolute;
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 500;
+    transition: transform 0.2s;
+  }
+
+  .element:hover {
+    transform: scale(1.5) rotate(15deg);
+  }
+
+  #bottomContainer {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    color: #fffa;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎄 圣诞快乐 🎄</h1>
+<div id="messageBox"></div>
+
+<div id="bottomContainer">
+  <div id="sender">发送人：烟雨</div>
+  <div id="special">救赎 & 大白猫专属</div>
+</div>
+
+<script>
+  const elements = ["⭐","❄️","🍎","🎁","🌟","🎄"];
+  const blessings = [
+    "🎄 圣诞快乐，糖果和笑容都送给你~",
+    "❄️ 雪花飞舞，愿好运也落在你身上~",
+    "🎁 打开红包，快乐偷偷跑进你心里~",
+    "🌟 星星闪闪，愿你的每一天都闪耀~",
+    "🍎 小苹果送祝福，甜甜蜜蜜~",
+    "🎅 圣诞老人说：你要一直幸福哦~",
+    "❄️ 雪花飘飘，烦恼统统都飞走~",
+    "🎄 快乐像铃铛，叮叮当当响在你心里~",
+    "🌟 每天都有小惊喜，生活暖暖的~",
+    "🎁 祝你笑口常开，幸福满满，救赎 & 大白猫专属~"
+  ];
+
+  function createElement() {
+    const el = document.createElement('div');
+    el.className = 'element';
+    el.textContent = elements[Math.floor(Math.random()*elements.length)];
+    el.style.left = Math.random()*window.innerWidth + 'px';
+    el.style.fontSize = (20 + Math.random()*30) + 'px';
+    document.body.appendChild(el);
+
+    let top = -50;
+    const speed = 1 + Math.random()*3;
+
+    el.addEventListener('click', () => {
+      const messageBox = document.getElementById('messageBox');
+      const blessing = blessings[Math.floor(Math.random()*blessings.length)];
+      messageBox.textContent = `祝福你们，救赎 & 大白猫：${blessing}`;
+      messageBox.style.display = 'block';
+      setTimeout(() => { messageBox.style.display = 'none'; }, 3000);
+      el.remove();
+    });
+
+    function fall() {
+      top += speed;
+      el.style.top = top + 'px';
+      if(top < window.innerHeight){
+        requestAnimationFrame(fall);
+      } else {
+        el.remove();
+      }
+    }
+    fall();
+  }
+
+  setInterval(createElement, 200);
+</script>
+
+</body>
+</html>
